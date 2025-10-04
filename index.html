@@ -109,7 +109,7 @@ translateBtn.addEventListener('click', () => {
     const editorContent = quill.getSemanticHTML();
     const targetLang = document.getElementById('targetLang').value;
     
-    fetch('http://127.0.0.1:5000/translate', {
+    fetch('/translate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

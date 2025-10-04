@@ -3,8 +3,8 @@ from flask_cors import CORS
 from bs4 import BeautifulSoup
 from google.cloud import translate_v2 as translate
 import os
-import json
-from google.oauth2.service_account import Credentials
+import json 
+from google.oauth2.service_account import Credentials 
 
 app = Flask(__name__)
 CORS(app)
@@ -19,6 +19,10 @@ if CREDENTIALS_VAR in os.environ:
     translate_client = translate.Client(credentials=credentials)
 else:
     translate_client = translate.Client()
+
+@app.route('/')
+def home():
+    return "El servidor de traducción está funcionando correctamente. Para usar la aplicación, se requiere hacer una petición POST al endpoint /translate."
 
 @app.route('/translate', methods=['POST'])
 def translate_email():
