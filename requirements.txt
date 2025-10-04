@@ -3,3 +3,4 @@ flask-cors
 beautifulsoup4
 google-cloud-translate
 gunicorn
+google-auth
