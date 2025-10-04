@@ -3,11 +3,22 @@ from flask_cors import CORS
 from bs4 import BeautifulSoup
 from google.cloud import translate_v2 as translate
 import os
+import json
+from google.oauth2.service_account import Credentials
 
 app = Flask(__name__)
 CORS(app)
 
-translate_client = translate.Client()
+CREDENTIALS_VAR = 'GOOGLE_APPLICATION_CREDENTIALS_JSON'
+
+if CREDENTIALS_VAR in os.environ:
+    cred_json = os.environ.get(CREDENTIALS_VAR)
+    cred_info = json.loads(cred_json)
+    
+    credentials = Credentials.from_service_account_info(cred_info)
+    translate_client = translate.Client(credentials=credentials)
+else:
+    translate_client = translate.Client()
 
 @app.route('/translate', methods=['POST'])
 def translate_email():
@@ -41,3 +52,4 @@ def translate_email():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
